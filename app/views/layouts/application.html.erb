@@ -11,6 +11,10 @@
   </head>
 
   <body>
-    <%= yield %>
+    <main>
+      <div data-turbo="false" id="map" class="sidebar-map">
+      </div>
+      <%= yield %>
+    </main>
   </body>
 </html>

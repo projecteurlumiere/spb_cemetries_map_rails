@@ -13,3 +13,112 @@
  *= require_tree .
  *= require_self
  */
+
+
+/* 
+*= require "leaflet"
+*= require "leaflet-sidebar.css" 
+*/
+
+ /* import icons */
+
+/* list */
+@import url(https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200);
+/* church-cross */
+@import url(https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200);
+/* question */
+@import url(https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200);
+
+/* general */
+
+:root {
+  --map-width: 600px;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+/* header */
+
+h1 {
+  padding: 1rem 0;
+  margin: 0;
+}
+
+header {
+  text-align: center;
+  width: 100vw;
+  background-color: rgb(221, 221, 221);
+}
+
+
+/* main */
+
+main {
+  /* max-width: 65vw;
+  grid-template-areas: 
+    "map  list"
+    "view view"; */
+}
+
+/* map */
+
+#map {
+  grid-area: map;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  /* filter: grayscale(80%); */
+}
+
+/* list */
+
+#list {
+  grid-area: list;
+}
+
+/* view */
+
+#view {
+  grid-area: view;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  display: grid;
+  grid-template-areas: 
+    "pic name"
+    "pic address";
+}
+
+.list-preview-pic {
+  grid-area: pic;
+}
+
+.list-name {
+  grid-area: name;
+}
+
+.list-address {
+  grid-area: address;
+}
+
+/* footer */
+
+footer {
+  position: absolute;
+  bottom: 0px;
+  background-color: rgb(222, 222, 222);
+  height: 3rem;
+  text-align: center;
+  width: 100%;
+}
