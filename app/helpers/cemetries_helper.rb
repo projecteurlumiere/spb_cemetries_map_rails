@@ -1,0 +1,2 @@
+module CemetriesHelper
+end
