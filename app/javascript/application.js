@@ -65,32 +65,32 @@ let sidebar = L.control.sidebar({
 
 // sidebar panels:
 
-let listTab = { 
-  id: 'list-tab',
-  tab: '<span class="material-symbols-outlined">reorder</span>',
-  pane: '<div>hello from list!</div>',
-  title: 'List'
-}
-sidebar.addPanel(listTab);
+// let listTab = { 
+//   id: 'list-tab',
+//   tab: '<span class="material-symbols-outlined">reorder</span>',
+//   pane: '<div>hello from list!</div>',
+//   title: 'List'
+// }
+// sidebar.addPanel(listTab);
 
-let entryTab = {
-  id: 'entry-info',
-  tab: '<span class="material-symbols-outlined">church</span>',
-  pane: '<div>Hello from entry tab</div>',
-  title: 'Entry',
-  position: 'top',
-}
-sidebar.addPanel(entryTab);
+// let entryTab = {
+//   id: 'entry-info',
+//   tab: '<span class="material-symbols-outlined">church</span>',
+//   pane: '<div>Hello from entry tab</div>',
+//   title: 'Entry',
+//   position: 'top',
+// }
+// sidebar.addPanel(entryTab);
 
-let generalTab = {
-  id: 'general_info',                     // UID, used to access the panel
-  tab: '<span class="material-symbols-outlined">question_mark</span>',  // content can be passed as HTML string
-  pane: '<div>hello from new -panel!</div>',
-  title: 'General information',              // an optional pane header
-  position: 'bottom'                  // optional vertical alignment, defaults to 'top'
-};
-sidebar.addPanel(generalTab);
+// let generalTab = {
+//   id: 'general_info',                     // UID, used to access the panel
+//   tab: '<span class="material-symbols-outlined">question_mark</span>',  // content can be passed as HTML string
+//   pane: '<div>hello from new -panel!</div>',
+//   title: 'General information',              // an optional pane header
+//   position: 'bottom'                  // optional vertical alignment, defaults to 'top'
+// };
+// sidebar.addPanel(generalTab);
 
-// sidebar first action:
+// // sidebar first action:
 
-sidebar.open('general_info');
+sidebar.open('list-tab');
