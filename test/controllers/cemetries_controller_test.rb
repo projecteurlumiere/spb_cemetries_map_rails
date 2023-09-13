@@ -1,6 +1,6 @@
 require "test_helper"
 
-class CemetriesControllerTest < ActionDispatch::IntegrationTest
+class CemeteriesControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end

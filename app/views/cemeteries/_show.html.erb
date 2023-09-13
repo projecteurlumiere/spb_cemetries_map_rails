@@ -1,0 +1,8 @@
+<%= turbo_frame_tag 'entry' do %>
+  <% unless @cemetery.nil? %>
+    <h2><%= @cemetery.name %></h2>
+    <p><%= @cemetery.description %></p>
+  <% else %>
+    <div>Hello from empty show partial</div>
+  <% end %>
+<% end %>
