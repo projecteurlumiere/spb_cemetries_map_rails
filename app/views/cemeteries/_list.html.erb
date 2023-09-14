@@ -3,6 +3,8 @@
     <li><%= link_to cemetery.name, cemetery_path(cemetery.id), data: {turbo_frame: 'entry', 
     controller: 'cemetery',
     action: 'click->map#toEntry',
-    'cemetery-coordinates-value': cemetery.coordinates} %></li><br>
+    'cemetery-id-value': cemetery.id,
+    'cemetery-coordinates-value': cemetery.coordinates}
+    %></li><br>
   <% end %>
 </ul>

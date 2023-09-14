@@ -1,4 +1,4 @@
-<%= turbo_frame_tag 'entry' do %>
+<%= turbo_frame_tag 'entry', data: {'cemetery-id-value': @cemetery.id} do %>
   <% unless @cemetery.nil? %>
     <h2><%= @cemetery.name %></h2>
     <p><%= @cemetery.description %></p>

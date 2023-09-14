@@ -13,7 +13,7 @@
   <body>
     <main>
       <%= tag.div id: 'map-container', data: {controller: 'map', 
-        action: 'cemetery:connect->map#drawPolygons cemetery:click->map#toEntry'} do %>
+        action: 'cemetery:connect->map#drawPolygon'} do %>
 
         <div id="map" class="sidebar-map"></div>
         
@@ -73,7 +73,7 @@
             </div>
           </div>
         </div>
-        
+
       <% end %>
     </main>
   </body>

@@ -3,31 +3,19 @@ import { Controller } from "@hotwired/stimulus"
 export default class extends Controller {
   static values = {
     coordinates: String,
+    id: Number,
   }
   
   connect() {
-    console.log(this.coordinatesValue);
     let parsedCoordinates;
     if (this.coordinatesValue) {
       parsedCoordinates = JSON.parse(this.coordinatesValue);
     }
     
     console.log("i am about to dispatch the event");
-    this.dispatch('connect', { detail: { coordinates: parsedCoordinates } })
-    
+    this.dispatch('connect', { detail: { coordinates: parsedCoordinates, id: this.idValue } })
 
-    // if (this.coordinatesValue) {
-    //   let parsedCoordinates = JSON.parse(this.coordinatesValue);
-    //   L.polygon(parsedCoordinates).addTo(map);
-    // }
-    
-    
-    // console.log(`Hello World! I am\n`);
-    // console.dir(this);
 
   }
 
-  // dispatchClickEvent(e){
-  //   dispatch
-  // }
 }

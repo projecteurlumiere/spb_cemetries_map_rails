@@ -8,8 +8,16 @@ export default class extends Controller {
   // }
   
   connect() {
-    console.log("map controller starts connecting");
+    this.polygons = {}
     this.map = L.map('map').setView([59.8965, 30.3264], 10);
+
+    if (window.location.toString().includes("/cemeteries/")) {
+      this.isShowRequest = true
+      this.initialEntryId = document.getElementById('entry').getAttribute('data-cemetery-id-value')
+    }
+    else this.isShowRequest = false
+
+    console.log(this.isShowRequest)
 
     L.tileLayer(`https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.{ext}?api_key=1`, {
       minZoom: 10,
@@ -24,21 +32,48 @@ export default class extends Controller {
     }).addTo(this.map);
     
     this.sidebar.open('list-tab');
-    
-    console.log(`Hello World! I am\n`);
-    console.dir(this);
 
     console.log('map controller has done its work')
   }
 
-  drawPolygons(e) {
+  drawPolygon(e) {
     if (e.detail.coordinates) {
-      L.polygon(e.detail.coordinates).addTo(this.map);
+      let polygon = L.polygon(e.detail.coordinates, {cemetery_id: e.detail.id});
+    
+      this.polygons[e.detail.id] = polygon;
+      polygon.addTo(this.map);
+
+      polygon.addEventListener('click', () => {
+        this.centerMap(polygon);
+        this.sidebar.open('entry-info')
+        Turbo.visit(`/cemeteries/${e.detail.id}`, { frame: 'entry' });
+      })
+
+      if (this.isShowRequest === true && this.initialEntryId == e.detail.id) {
+        this.centerMap(polygon)
+        this.sidebar.open('entry-info')
+      }
+
       console.log('I have drawn a polygon!')
     }
   }
 
   toEntry(e) {
+    console.log(typeof e)
+    console.log(e.target);
+    console.log(e.target.getAttribute("data-cemetery-id-value"));
+
+    let polygon = this.polygons[e.target.getAttribute("data-cemetery-id-value")];
+    
+    this.centerMap(polygon);
+
     this.sidebar.open('entry-info');
   }
+
+  centerMap(polygon) {
+    if (polygon) {
+      this.map.flyTo(polygon.getCenter(), 15)
+    }
+  }
+
 }
