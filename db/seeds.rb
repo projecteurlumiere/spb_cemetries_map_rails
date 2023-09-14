@@ -42,7 +42,7 @@ mitro_coordinates = "[
   [59.898576, 30.298978],
   [59.898835, 30.301554],
   [59.896532, 30.303163]
-]".gsub(/\R+/, '').squeeze
+]".gsub(/\R+/, '').squeeze.concat("]")
 
 Cemetery.create(
   name: "Mitrofaniyevskoe Kladbische",

@@ -12,64 +12,66 @@
 
   <body>
     <main>
-      <div id="map" class="sidebar-map"></div>
-      
-      <div id="sidebar" class="leaflet-sidebar collapsed">
+      <%= tag.div id: 'map-container', data: {controller: 'map', action: 'cemetery:connect->map#drawPolygons cemetery:click->map#toEntry'} do %>
+        <div id="map" class="sidebar-map"></div>
         
-        <!-- Nav tabs -->
-        <div class="leaflet-sidebar-tabs">
-          <ul role="tablist"> <!-- top aligned tabs -->
-            <li><a href="#list-tab" role="tab"><span class="material-symbols-outlined">reorder</span></a></li>
-            <li><a href="#entry-info" role="tab"><span class="material-symbols-outlined">church</span></a></li>
-          </ul>
+        <div id="sidebar" class="leaflet-sidebar collapsed">
+          
+          <!-- Nav tabs -->
+          <div class="leaflet-sidebar-tabs">
+            <ul role="tablist"> <!-- top aligned tabs -->
+              <li><a href="#list-tab" role="tab"><span class="material-symbols-outlined">reorder</span></a></li>
+              <li><a href="#entry-info" role="tab"><span class="material-symbols-outlined">church</span></a></li>
+            </ul>
 
-          <ul role="tablist"> <!-- bottom aligned tabs -->
-            <li><a href="#general-info" role="tab"><span class="material-symbols-outlined">question_mark</span></a></li>
-          </ul>
-        </div>
-
-        <!-- Tab panes -->
-        <div class="leaflet-sidebar-content">
-          <div class="leaflet-sidebar-pane" id="list-tab">
-            <h1 class="leaflet-sidebar-header">
-              Cemetries List
-              <div class="leaflet-sidebar-close"><i class="fa fa-caret-left">X</i></div>
-            </h1>
-            <div id="content-container-list">
-              
-              <% if controller_name == 'cemeteries' && action_name == 'index' %>
-                <%= yield %>
-              <% else %>
-                <%= render 'cemeteries/list' %>
-              <% end %>
-
-            </div>
-            
+            <ul role="tablist"> <!-- bottom aligned tabs -->
+              <li><a href="#general-info" role="tab"><span class="material-symbols-outlined">question_mark</span></a></li>
+            </ul>
           </div>
 
-          <div class="leaflet-sidebar-pane" id="entry-info">
-            <h1 class="leaflet-sidebar-header">Entry!<div class="leaflet-sidebar-close"><i class="fa fa-caret-left">X</i></div></h1>
-            <div id="content-container-entry-info">
-              <% if controller_name == 'cemeteries' && action_name == 'show' %>
-                <%= yield %>
-              <% else %>
-                <%= turbo_frame_tag 'entry' do %>
-                  <div>Hello from view empty entry!</div>
+          <!-- Tab panes -->
+          <div class="leaflet-sidebar-content">
+            <div class="leaflet-sidebar-pane" id="list-tab">
+              <h1 class="leaflet-sidebar-header">
+                Cemetries List
+                <div class="leaflet-sidebar-close"><i class="fa fa-caret-left">X</i></div>
+              </h1>
+              <div id="content-container-list">
+                
+                <% if controller_name == 'cemeteries' && action_name == 'index' %>
+                  <%= yield %>
+                <% else %>
+                  <%= render 'cemeteries/list' %>
                 <% end %>
-              <% end %>
 
-              <%# render partial: 'cemeteries/show' %>
+              </div>
+              
+            </div>
+
+            <div class="leaflet-sidebar-pane" id="entry-info">
+              <h1 class="leaflet-sidebar-header">Entry!<div class="leaflet-sidebar-close"><i class="fa fa-caret-left">X</i></div></h1>
+              <div id="content-container-entry-info">
+                <% if controller_name == 'cemeteries' && action_name == 'show' %>
+                  <%= yield %>
+                <% else %>
+                  <%= turbo_frame_tag 'entry' do %>
+                    <div>Hello from view empty entry!</div>
+                  <% end %>
+                <% end %>
+
+                <%# render partial: 'cemeteries/show' %>
+              </div>
+            </div>
+
+            <div class="leaflet-sidebar-pane" id="general-info">
+              <h1 class="leaflet-sidebar-header">Who we are<div class="leaflet-sidebar-close"><i class="fa fa-caret-left">X</i></div></h1>
+              <div id="content-container-general-info">
+                <p>Static content will go here</p>
+              </div> 
             </div>
           </div>
-
-          <div class="leaflet-sidebar-pane" id="general-info">
-            <h1 class="leaflet-sidebar-header">Who we are<div class="leaflet-sidebar-close"><i class="fa fa-caret-left">X</i></div></h1>
-            <div id="content-container-general-info">
-              <p>Static content will go here</p>
-            </div> 
-          </div>
         </div>
-      </div>
+      <% end %>
     </main>
   </body>
 </html>
