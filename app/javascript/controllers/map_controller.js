@@ -46,7 +46,7 @@ export default class extends Controller {
       polygon.addEventListener('click', () => {
         this.centerMap(polygon);
         this.sidebar.open('entry-info')
-        Turbo.visit(`/cemeteries/${e.detail.id}`, { frame: 'entry' });
+        Turbo.visit(`/cemeteries/${e.detail.id}`, { action: 'advance', frame: 'entry' }); // doesn't update URL despite action: advance- apparently, rails bug
       })
 
       if (this.isShowRequest === true && this.initialEntryId == e.detail.id) {

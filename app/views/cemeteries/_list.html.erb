@@ -2,6 +2,7 @@
   <% Cemetery.all.each do |cemetery| %>
     <li><%= link_to cemetery.name, cemetery_path(cemetery.id), data: {turbo_frame: 'entry', 
     controller: 'cemetery',
+    turbo_action: 'advance',
     action: 'click->map#toEntry',
     'cemetery-id-value': cemetery.id,
     'cemetery-coordinates-value': cemetery.coordinates}
