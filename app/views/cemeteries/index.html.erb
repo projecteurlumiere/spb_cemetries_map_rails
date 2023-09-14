@@ -1,6 +1,1 @@
-<ul>
-  <% @cemeteries.each do |cemetery| %>
-    <li><%= link_to cemetery.name, cemetery_path(cemetery.id), data: {turbo_frame: 'entry'} %></li><br>
-  <% end %>
-</ul>
-
+<%= render 'list' %>

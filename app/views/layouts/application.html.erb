@@ -36,7 +36,13 @@
               <div class="leaflet-sidebar-close"><i class="fa fa-caret-left">X</i></div>
             </h1>
             <div id="content-container-list">
-              <%= yield %>
+              
+              <% if controller_name == 'cemeteries' && action_name == 'index' %>
+                <%= yield %>
+              <% else %>
+                <%= render 'cemeteries/list' %>
+              <% end %>
+
             </div>
             
           </div>
@@ -44,7 +50,15 @@
           <div class="leaflet-sidebar-pane" id="entry-info">
             <h1 class="leaflet-sidebar-header">Entry!<div class="leaflet-sidebar-close"><i class="fa fa-caret-left">X</i></div></h1>
             <div id="content-container-entry-info">
-              <%= render partial: 'cemeteries/show' %>
+              <% if controller_name == 'cemeteries' && action_name == 'show' %>
+                <%= yield %>
+              <% else %>
+                <%= turbo_frame_tag 'entry' do %>
+                  <div>Hello from view empty entry!</div>
+                <% end %>
+              <% end %>
+
+              <%# render partial: 'cemeteries/show' %>
             </div>
           </div>
 
