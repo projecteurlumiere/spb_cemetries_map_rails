@@ -1,0 +1,20 @@
+/* photo gallery */
+
+.photo-gallery {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fit, minmax(75px, 30%));
+  gap: 10px;
+}
+
+.photo-gallery > li > a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.photo-gallery > li > a > img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}

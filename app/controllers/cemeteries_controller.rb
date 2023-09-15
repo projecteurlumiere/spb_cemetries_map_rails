@@ -4,5 +4,6 @@ class CemeteriesController < ApplicationController
   
   def show
     @cemetery = Cemetery.find_by(id: params[:id])
+    @photos = Photo.where(cemetery_id: @cemetery.id)
   end
 end

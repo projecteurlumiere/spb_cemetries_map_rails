@@ -8,3 +8,4 @@ pin_all_from "app/javascript/controllers", under: "controllers"
 pin "leaflet", preload: true # @1.9.4
 pin "leaflet-sidebar-v2", preload: true # @3.2.3
 pin "leaflet-css" # @0.1.0
+pin "fslightbox" # @3.4.1

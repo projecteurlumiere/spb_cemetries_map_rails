@@ -10,14 +10,14 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
- *= require_self
  */
 
 
-/* 
+/*
+*= require_self
+*= require_tree .
 *= require "leaflet"
-*= require "leaflet-sidebar.css" 
+*= require "leaflet-sidebar.css"
 */
 
  /* import icons */
@@ -32,93 +32,25 @@
 /* general */
 
 :root {
-  --map-width: 600px;
+  
 }
 
 body {
-  margin: 0;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
+  min-height: 100%;
 }
-
-/* header */
-
-h1 {
-  padding: 1rem 0;
-  margin: 0;
-}
-
-header {
-  text-align: center;
-  width: 100vw;
-  background-color: rgb(221, 221, 221);
-}
-
-
-/* main */
-
-main {
-  /* max-width: 65vw;
-  grid-template-areas: 
-    "map  list"
-    "view view"; */
-}
-
-/* map */
 
 #map {
-  grid-area: map;
   width: 100vw;
   height: 100vh;
   justify-content: center;
-  align-items: center;
   /* filter: grayscale(80%); */
 }
 
-/* list */
+/* sidebar tabs */
 
-#list {
-  grid-area: list;
+.leaflet-sidebar-tabs > ul > li > a {
+  display: flex !important;
+  justify-content: center;
+  align-items: center;
 }
 
-/* view */
-
-#view {
-  grid-area: view;
-}
-
-ul {
-  list-style-type: none;
-}
-
-li {
-  display: grid;
-  grid-template-areas: 
-    "pic name"
-    "pic address";
-}
-
-.list-preview-pic {
-  grid-area: pic;
-}
-
-.list-name {
-  grid-area: name;
-}
-
-.list-address {
-  grid-area: address;
-}
-
-/* footer */
-
-footer {
-  position: absolute;
-  bottom: 0px;
-  background-color: rgb(222, 222, 222);
-  height: 3rem;
-  text-align: center;
-  width: 100%;
-}

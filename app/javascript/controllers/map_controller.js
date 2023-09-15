@@ -72,7 +72,7 @@ export default class extends Controller {
 
   centerMap(polygon) {
     if (polygon) {
-      this.map.flyTo(polygon.getCenter(), 15)
+      this.map.flyTo(polygon.getCenter(), 14)
     }
   }
 
