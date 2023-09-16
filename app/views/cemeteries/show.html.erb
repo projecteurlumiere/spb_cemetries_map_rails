@@ -4,13 +4,7 @@
     <div class="entry-gallery-container">
       <h3 class="entry-gallery-heading">Галерея</h3>
       <ul class="photo-gallery">
-        <% @photos.each do |photo| %>
-          <li><%= link_to photo.link, data: {
-            fslightbox: 'gallery' } do %>
-              <%= image_tag photo.link %>
-            <% end %>
-          </li>
-        <% end %>
+        <%= render partial: 'gallery' %>
       </ul>
     </div>
     <div class="entry-description-container">
@@ -18,8 +12,8 @@
       <div class="entry-description-text-container">
         <p><%= @cemetery.description %></p>
       </div>
-        <% else %>
-      <div>Hello from empty show partial</div>
-        <% end %>
     </div>
+  <% else %>
+    <div>Hello from empty show partial</div>
+  <% end %>
 <% end %>

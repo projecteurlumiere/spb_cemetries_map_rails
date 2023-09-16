@@ -35,6 +35,10 @@
 /* general */
 
 :root {
+  /* list */
+  --list-pic-width: 50px;
+
+  /* entry */
   /* --entry-max-width: 50ch; */
   --entry-h2-font: 1.75rem;
   --entry-h2-font-weight: 700;

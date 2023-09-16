@@ -2,7 +2,7 @@
 
 #entry {
   display: grid;
-  gap: 1.5ch;
+  gap: 1ch;
   grid-template-areas: 
     "h2"
     "gallery-container"
@@ -11,12 +11,14 @@
 
 #entry > .entry-gallery-container {
   grid-area: gallery-container;
+  display: grid;
+  gap: 1ch;
 }
 
 #entry > .entry-description-container {
   grid-area: description-container;
+  margin-top: 1ch;
 }
-
 
 /* typography */
 
