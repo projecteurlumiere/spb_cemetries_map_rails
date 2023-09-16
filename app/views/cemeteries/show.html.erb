@@ -5,10 +5,9 @@
     <ul class="photo-gallery">
       <% @photos.each do |photo| %>
         <li><%= link_to photo.link, data: {
-          fslightbox: 'gallery'
-        } do %>
-          <%= image_tag photo.link, loading: 'lazy' %>
-        <% end %>
+          fslightbox: 'gallery' } do %>
+            <%= image_tag photo.link, loading: 'lazy' %>
+          <% end %>
         </li>
       <% end %>
     </ul>

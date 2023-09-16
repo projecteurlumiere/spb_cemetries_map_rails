@@ -5,32 +5,25 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
   <body>
     <main>
       <%= tag.div id: 'map-container', data: {controller: 'map', 
         action: 'cemetery:connect->map#drawPolygon'} do %>
-
         <div id="map" class="sidebar-map"></div>
-        
         <div id="sidebar" class="leaflet-sidebar collapsed">
-          
           <!-- Nav tabs -->
           <div class="leaflet-sidebar-tabs">
             <ul role="tablist"> <!-- top aligned tabs -->
               <li><a href="#list-tab" role="tab"><span class="material-symbols-outlined">reorder</span></a></li>
               <li><a href="#entry-info" role="tab"><span class="material-symbols-outlined">church</span></a></li>
             </ul>
-
             <ul role="tablist"> <!-- bottom aligned tabs -->
               <li><a href="#general-info" role="tab"><span class="material-symbols-outlined">question_mark</span></a></li>
             </ul>
           </div>
-
           <!-- Tab panes -->
           <div class="leaflet-sidebar-content">
             <div class="leaflet-sidebar-pane" id="list-tab">
@@ -39,19 +32,17 @@
                 <div class="leaflet-sidebar-close"><i class="fa fa-caret-left">X</i></div>
               </h1>
               <div id="content-container-list">
-                
                 <% if controller_name == 'cemeteries' && action_name == 'index' %>
                   <%= yield %>
                 <% else %>
                   <%= render 'cemeteries/list' %>
                 <% end %>
-
               </div>
-              
             </div>
-
             <div class="leaflet-sidebar-pane" id="entry-info">
-              <h1 class="leaflet-sidebar-header">Entry!<div class="leaflet-sidebar-close"><i class="fa fa-caret-left">X</i></div></h1>
+              <h1 class="leaflet-sidebar-header">Entry!
+                <div class="leaflet-sidebar-close"><i class="fa fa-caret-left">X</i></div>
+              </h1>
               <div id="content-container-entry-info">
                 <% if controller_name == 'cemeteries' && action_name == 'show' %>
                   <%= yield %>
@@ -60,20 +51,19 @@
                     <div>Hello from view empty entry!</div>
                   <% end %>
                 <% end %>
-
                 <%# render partial: 'cemeteries/show' %>
               </div>
             </div>
-
             <div class="leaflet-sidebar-pane" id="general-info">
-              <h1 class="leaflet-sidebar-header">Who we are<div class="leaflet-sidebar-close"><i class="fa fa-caret-left">X</i></div></h1>
+              <h1 class="leaflet-sidebar-header">Who we are
+                <div class="leaflet-sidebar-close"><i class="fa fa-caret-left">X</i></div>
+              </h1>
               <div id="content-container-general-info">
                 <p>Static content will go here</p>
-              </div> 
+              </div>
             </div>
           </div>
         </div>
-
       <% end %>
     </main>
   </body>
