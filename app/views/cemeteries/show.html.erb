@@ -1,19 +1,25 @@
 <%= turbo_frame_tag 'entry', data: {'cemetery-id-value': @cemetery.id} do %>
   <% unless @cemetery.nil? %>
     <h2 class="entry-main-heading"><%= @cemetery.name %></h2>
-    <h3 class="entry-heading">Gallery</h3>
-    <ul class="photo-gallery">
-      <% @photos.each do |photo| %>
-        <li><%= link_to photo.link, data: {
-          fslightbox: 'gallery' } do %>
-            <%= image_tag photo.link, loading: 'lazy' %>
-          <% end %>
-        </li>
-      <% end %>
-    </ul>
-    <h3 class="entry-heading">Description</h3>
-    <p><%= @cemetery.description %></p>
-  <% else %>
-    <div>Hello from empty show partial</div>
-  <% end %>
+    <div class="entry-gallery-container">
+      <h3 class="entry-gallery-heading">Галерея</h3>
+      <ul class="photo-gallery">
+        <% @photos.each do |photo| %>
+          <li><%= link_to photo.link, data: {
+            fslightbox: 'gallery' } do %>
+              <%= image_tag photo.link %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+    <div class="entry-description-container">
+      <h3 class="entry-description-heading">Описание</h3>
+      <div class="entry-description-text-container">
+        <p><%= @cemetery.description %></p>
+      </div>
+        <% else %>
+      <div>Hello from empty show partial</div>
+        <% end %>
+    </div>
 <% end %>

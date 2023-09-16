@@ -1,3 +1,39 @@
+/* layout */
+
+#entry {
+  display: grid;
+  gap: 1.5ch;
+  grid-template-areas: 
+    "h2"
+    "gallery-container"
+    "description-container";
+}
+
+#entry > .entry-gallery-container {
+  grid-area: gallery-container;
+}
+
+#entry > .entry-description-container {
+  grid-area: description-container;
+}
+
+
+/* typography */
+
+#entry h2 {
+  font-size: var(--entry-h2-font);
+  font-weight: var(--entry-h2-font-weight);
+}
+
+#entry h3 {
+  font-size: var(--entry-h3-font);
+  font-weight: var(--entry-h2-font-weight);
+}
+
+#entry .entry-description-text-container > p {
+  font-size: var(--entry-p-font);
+}
+
 /* photo gallery */
 
 .photo-gallery {

@@ -20,7 +20,10 @@
 *= require "leaflet-sidebar.css"
 */
 
- /* import icons */
+/* import icons */
+
+/* import font */
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap');
 
 /* list */
 @import url(https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200);
@@ -32,7 +35,11 @@
 /* general */
 
 :root {
-  
+  /* --entry-max-width: 50ch; */
+  --entry-h2-font: 1.75rem;
+  --entry-h2-font-weight: 700;
+  --entry-h3-font: calc(var(--entry-h2-font) * 0.75);
+  --entry-p-font: 1rem;
 }
 
 body {
@@ -54,3 +61,7 @@ body {
   align-items: center;
 }
 
+
+.leaflet-sidebar-header {
+  font-weight: 700;
+}
