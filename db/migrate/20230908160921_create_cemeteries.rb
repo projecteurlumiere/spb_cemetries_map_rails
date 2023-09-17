@@ -6,6 +6,8 @@ class CreateCemeteries < ActiveRecord::Migration[7.0]
       t.string :year_closed
       t.string :description
       t.string :coordinates
+      t.string :main_pic_link
+      t.string :main_thumb_pic_link
 
       t.timestamps
     end

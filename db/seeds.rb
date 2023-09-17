@@ -6,13 +6,31 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
-def create_cemetry 
+
+def create_cemetery
   Cemetery.create(
     name: Faker::Travel::TrainStation.name,
     year_opened: Faker::Date.between(from: '1800-01-01', to: '1899-12-31'),
     year_closed: Faker::Date.between(from: '1900-01-01', to: '1939-09-01'),
     description: Faker::Lorem.paragraph(sentence_count: 20),
+    main_pic_link: FFaker::Image.url,
+    main_thumb_pic_link: FFaker::Image.url('50x50')
   )
+end
+
+def quasi_random_n_of_photos(index)
+  case index
+  when 0
+    5
+  when 1
+    10
+  when 2
+    3
+  when 3
+    1
+  else
+    (1..10).to_a.sample
+  end
 end
 
 mitro_coordinates = "[
@@ -45,27 +63,24 @@ mitro_coordinates = "[
 ]".gsub(/\R+/, '').squeeze.concat("]")
 
 Cemetery.create(
-  name: "Mitrofaniyevskoe Kladbische",
+  name: "Митрофаньевское кладбище",
   year_opened: Faker::Date.between(from: '1800-01-01', to: '1899-12-31'),
   year_closed: Faker::Date.between(from: '1900-01-01', to: '1939-09-01'),
   description: Faker::Lorem.paragraph(sentence_count: 20),
   coordinates: mitro_coordinates
 )
 
-10.times do 
-  Cemetery.create(
-    name: Faker::Travel::TrainStation.name,
-    year_opened: Faker::Date.between(from: '1800-01-01', to: '1899-12-31'),
-    year_closed: Faker::Date.between(from: '1900-01-01', to: '1939-09-01'),
-    description: Faker::Lorem.paragraph(sentence_count: 30),
-  )
+15.times do 
+  create_cemetery
 end
 
-Cemetery.all.each do |cemetery|
-  5.times do 
+Cemetery.all.each_with_index do |cemetery, index|
+  n = quasi_random_n_of_photos(index)
+  n.times do
     Photo.create(
       cemetery_id: cemetery.id,
       link: FFaker::Image.url,
+      thumb_link: FFaker::Image.url('50x50'),
       name: Faker::Lorem.sentence(word_count: 3),
       description: Faker::Lorem.paragraph(sentence_count: 3)
     )
