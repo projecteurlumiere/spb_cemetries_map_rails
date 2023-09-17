@@ -3,9 +3,9 @@
     <h2 class="entry-main-heading"><%= @cemetery.name %></h2>
     <div class="entry-gallery-container">
       <h3 class="entry-gallery-heading">Галерея</h3>
-      <ul class="photo-gallery">
+      <%= tag.ul class: "photo-gallery", data: {controller: "gallery"} do%>
         <%= render partial: 'gallery' %>
-      </ul>
+      <% end %>
     </div>
     <div class="entry-description-container">
       <h3 class="entry-description-heading">Описание</h3>
