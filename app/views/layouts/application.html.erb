@@ -11,7 +11,7 @@
   <body>
     <main>
       <%= tag.div id: 'map-container', data: {controller: 'map', 
-        action: 'cemetery:connect->map#drawPolygon'} do %>
+        action: 'cemetery:connect->map#drawPolygon cemetery:connect->map#toInitialEntry'} do %>
         <div id="map" class="sidebar-map"></div>
         <div id="sidebar" class="leaflet-sidebar collapsed">
           <!-- Nav tabs -->
