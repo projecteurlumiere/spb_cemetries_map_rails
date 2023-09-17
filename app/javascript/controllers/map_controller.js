@@ -53,6 +53,8 @@ export default class extends Controller {
   }
 
   #toEntry(polygon){
+    this.sidebar.enablePanel('entry-info');
+
     this.#centerMap(polygon);
     this.sidebar.open('entry-info');
   }
