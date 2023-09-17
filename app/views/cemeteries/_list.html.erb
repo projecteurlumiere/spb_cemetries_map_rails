@@ -2,7 +2,7 @@
 <ul id="cemetery-list">
   <% Cemetery.all.each do |cemetery| %>
     <li class="list-entry">
-      <%= image_tag Photo.find_by(cemetery_id: cemetery.id).link, class: "list-entry-pic" %>
+      <%= image_tag cemetery.main_thumb_pic_link, class: "list-entry-pic" %>
       <%= link_to cemetery.name, cemetery_path(cemetery.id), class: 'list-entry-name', 
         data: { turbo_frame: 'entry',
         controller: 'cemetery',

@@ -25,9 +25,11 @@ def quasi_random_n_of_photos(index)
   when 1
     10
   when 2
-    3
-  when 3
     1
+  when 3
+    0
+  when 4
+    3
   else
     (1..10).to_a.sample
   end
@@ -67,7 +69,9 @@ Cemetery.create(
   year_opened: Faker::Date.between(from: '1800-01-01', to: '1899-12-31'),
   year_closed: Faker::Date.between(from: '1900-01-01', to: '1939-09-01'),
   description: Faker::Lorem.paragraph(sentence_count: 20),
-  coordinates: mitro_coordinates
+  coordinates: mitro_coordinates,
+  main_pic_link: FFaker::Image.url,
+  main_thumb_pic_link: FFaker::Image.url('50x50')
 )
 
 15.times do 
