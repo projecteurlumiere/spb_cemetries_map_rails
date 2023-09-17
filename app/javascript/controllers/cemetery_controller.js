@@ -12,10 +12,6 @@ export default class extends Controller {
       parsedCoordinates = JSON.parse(this.coordinatesValue);
     }
     
-    console.log("i am about to dispatch the event");
     this.dispatch('connect', { detail: { coordinates: parsedCoordinates, id: this.idValue } })
-
-
   }
-
 }

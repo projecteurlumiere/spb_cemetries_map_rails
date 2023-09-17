@@ -1,5 +1,4 @@
 import { Controller } from "@hotwired/stimulus"
-import "fslightbox"
 
 export default class extends Controller {
 
@@ -9,9 +8,5 @@ export default class extends Controller {
     if (link) {
       link.onclick = () => { fsLightbox.open() }
     }
-  }
-  
-  disconnect() {
-    console.log("disconnected!");
   }
 }
