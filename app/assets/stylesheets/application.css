@@ -35,15 +35,29 @@
 /* general */
 
 :root {
+  /* sidebar width */
+  --sidebar-max-content-width: 380px;
+  --sidebar-mid-content-width: 310px;
+  --sidebar-min-content-width: 225px;
+  /* --sidebar-fullscreen-content-width: 0px; */
+
+  
   /* list */
   --list-pic-width: 50px;
 
   /* entry */
-  /* --entry-max-width: 50ch; */
+  /* typography */
   --entry-h2-font: 1.75rem;
   --entry-h2-font-weight: 700;
   --entry-h3-font: calc(var(--entry-h2-font) * 0.75);
   --entry-p-font: 1rem;
+
+  /* gallery */
+  --gallery-gap: 5px;
+  --gallery-pic-max-content-width: calc((var(--sidebar-max-content-width) / 3) - (var(--gallery-gap) * 2));
+  --gallery-pic-mid-content-width: calc((var(--sidebar-mid-content-width) / 3) - (var(--gallery-gap) * 2));
+  --gallery-pic-min-content-width: calc((var(--sidebar-min-content-width) / 3) - (var(--gallery-gap) * 2));
+
 }
 
 body {

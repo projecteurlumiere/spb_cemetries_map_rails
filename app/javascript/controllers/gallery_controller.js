@@ -4,7 +4,7 @@ export default class extends Controller {
 
   connect() {
     refreshFsLightbox();
-    let link = document.querySelector(".gallery-n-more-link")
+    let link = document.querySelector(".lightbox-opener");
     if (link) {
       link.onclick = () => { fsLightbox.open() }
     }

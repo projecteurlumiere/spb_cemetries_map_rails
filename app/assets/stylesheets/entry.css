@@ -1,8 +1,16 @@
 /* layout */
 
+/* sidebar's content default width: 380px */
+
+#entry > * {
+  max-width: 100%;
+}
+
 #entry {
   display: grid;
+  justify-content: first baseline;
   gap: 1ch;
+  grid-auto-columns: 1fr;
   grid-template-areas: 
     "h2"
     "gallery-container"
@@ -11,7 +19,8 @@
 
 #entry > .entry-gallery-container {
   grid-area: gallery-container;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   gap: 1ch;
 }
 
@@ -34,25 +43,113 @@
 
 #entry .entry-description-text-container > p {
   font-size: var(--entry-p-font);
+  text-align: justify;
+}
+
+/* .entry-gallery-container */
+/* .entry-gallery-heading-container */
+
+.gallery-n-more-link-top {
+  display: none !important;
+}
+
+.entry-gallery-heading-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 2ch;
 }
 
 /* photo gallery */
 
 .photo-gallery {
   display: grid;
-  justify-content: center;
-  grid-template-columns: repeat(auto-fit, minmax(75px, 30%));
+  justify-content: space-between;
+  align-items: center;
+  grid-template-columns: repeat(3, var(--gallery-pic-max-content-width));
   gap: 10px;
+  row-gap: 10px;
 }
 
 .photo-gallery > li > a {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
 }
 
 .photo-gallery > li > a > img {
-  max-width: 100%;
+  max-width: var(--gallery-pic-max-content-width);
+  min-width: calc(var(--gallery-pic-min-content-width) * 0.5);
   height: auto;
   border-radius: 10px;
+}
+
+@media (max-width: 1199px) {
+  /* sidebar's content width: 310px */
+
+  .photo-gallery { 
+    grid-template-columns: repeat(3, var(--gallery-pic-mid-content-width));
+  }
+}
+
+/* sidebar's content width: 225px */
+
+@media (max-width: 991px) {
+  .photo-gallery { 
+    grid-template-columns: repeat(3, var(--gallery-pic-min-content-width));
+  }
+
+  #entry h2 {
+    font-size: calc(var(--entry-h2-font) * 0.8);
+  }
+}
+
+/* sidebar goes fullscreen */
+@media (max-width: 767px) {
+  #entry {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .photo-gallery {
+    display: flex;
+  }
+
+  .photo-gallery > li {
+    min-width: 0;
+    flex-shrink: 1;
+  }
+
+  .gallery-n-more-link {
+    display: none !important;
+  }
+
+  .gallery-n-more-link-top {
+    display: block !important;
+  }
+
+}
+
+@media (max-width: 703px) {
+
+}
+
+@media (max-width: 470px) {
+  .photo-gallery {
+  }
+  .photo-gallery > li {
+  }
+
+@media (max-width: 300px) {
+  :root {
+    font-size: 5vw;
+  }
+  
+  .photo-gallery {
+    flex-wrap: wrap;
+  }
+  .photo-gallery > li {
+    width: 40px;
+  }
+}
 }
