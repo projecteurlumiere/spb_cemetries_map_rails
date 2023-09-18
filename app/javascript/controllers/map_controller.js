@@ -53,7 +53,7 @@ export default class extends Controller {
   }
 
   #toEntry(polygon){
-    this.sidebar.enablePanel('entry-info');
+    this.sidebar.enablePanel('entry-info'); // should i overoptimize this?
 
     this.#centerMap(polygon);
     this.sidebar.open('entry-info');
@@ -67,8 +67,8 @@ export default class extends Controller {
 
   #isShowRequest() {
     if (window.location.toString().includes("/cemeteries/")) {
-      this.isShowRequest = true
-      this.initialEntryId = document.getElementById('entry').getAttribute('data-cemetery-id-value')
+      this.isShowRequest = true;
+      this.initialEntryId = document.getElementById('entry').getAttribute('data-cemetery-id-value');
     }
     else this.isShowRequest = false
   }
