@@ -14,7 +14,7 @@ def create_cemetery
     year_closed: Faker::Date.between(from: '1900-01-01', to: '1939-09-01'),
     description: Faker::Lorem.paragraph(sentence_count: 20),
     main_pic_link: FFaker::Image.url,
-    main_thumb_pic_link: FFaker::Image.url('50x50')
+    main_thumb_pic_link: FFaker::Image.url('150x150')
   )
 end
 
@@ -71,7 +71,7 @@ Cemetery.create(
   description: Faker::Lorem.paragraph(sentence_count: 20),
   coordinates: mitro_coordinates,
   main_pic_link: FFaker::Image.url,
-  main_thumb_pic_link: FFaker::Image.url('50x50')
+  main_thumb_pic_link: FFaker::Image.url('150x150')
 )
 
 15.times do 
@@ -84,7 +84,7 @@ Cemetery.all.each_with_index do |cemetery, index|
     Photo.create(
       cemetery_id: cemetery.id,
       link: FFaker::Image.url,
-      thumb_link: FFaker::Image.url('50x50'),
+      thumb_link: FFaker::Image.url('150x150'),
       name: Faker::Lorem.sentence(word_count: 3),
       description: Faker::Lorem.paragraph(sentence_count: 3)
     )
