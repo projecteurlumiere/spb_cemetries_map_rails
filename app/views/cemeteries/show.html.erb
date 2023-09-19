@@ -1,15 +1,17 @@
 <%= turbo_frame_tag 'entry', data: {'cemetery-id-value': @cemetery.id} do %>
   <% unless @cemetery.nil? %>
     <h2 class="entry-main-heading"><%= @cemetery.name %></h2>
-    <div class="entry-gallery-container">
-      <div class="entry-gallery-heading-container">
-        <h3 class="entry-gallery-heading">Галерея</h3>
-        <a href="" class="gallery-n-more-link-top lightbox-opener">Смотреть все <%= @photos.count %> фото</a>
+    <% unless @photos.empty? %>
+      <div class="entry-gallery-container">
+        <div class="entry-gallery-heading-container">
+          <h3 class="entry-gallery-heading">Галерея</h3>
+          <a href="" class="gallery-n-more-link-top lightbox-opener">Смотреть все <%= @photos.count %> фото</a>
+        </div>
+        <%= tag.ul class: "photo-gallery", data: {controller: "gallery"} do%>
+          <%= render partial: 'gallery' %>
+        <% end %>
       </div>
-      <%= tag.ul class: "photo-gallery", data: {controller: "gallery"} do%>
-        <%= render partial: 'gallery' %>
-      <% end %>
-    </div>
+    <% end %>
     <div class="entry-description-container">
       <h3 class="entry-description-heading">Описание</h3>
       <div class="entry-description-text-container">
