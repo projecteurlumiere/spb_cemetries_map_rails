@@ -76,6 +76,7 @@ p {
 #map {
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   justify-content: center;
   /* filter: grayscale(80%); */
 }
