@@ -227,6 +227,7 @@ DEPENDENCIES
   ffaker
   importmap-rails
   jbuilder
+  nokogiri
   puma (~> 5.0)
   rails (~> 7.0.7, >= 7.0.7.2)
   selenium-webdriver

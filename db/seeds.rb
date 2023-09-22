@@ -6,15 +6,99 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
+# - Найти список кладбищ (в идеале array из названий получить. Или можно запарсить страничку в википедии)
+# - На каждый раз выдать запрос в OSM, чтобы получить osm_id (не забыть, что у каждого есть type и надо его поставить рядом с id)
+# - Вывести название и координаты (координаты должны быть в JSON или GeoJSON) на итоговую карту
 
-def create_cemetery
+require 'net/http'
+
+# getting the list of cemeteries
+
+cemetery_list = Net::HTTP.get(URI("https://spb.ritual.ru/poleznaya-informatsiya/kladbishcha/"))
+
+path_to_letter_boxes = "div.flat-grid > div.flat-grid__block > div.flat-grid__list"
+
+array_of_existing_cemeteries = Nokogiri::HTML.parse(cemetery_list).css(path_to_letter_boxes).each_with_object([]) do |tag, array|
+  tag.children.each do |child_tag|
+    next if child_tag.attribute('alt').nil?
+    array << child_tag.attribute('alt').value
+  end
+end.uniq
+
+puts array_of_existing_cemeteries.count
+
+
+
+
+
+
+
+
+
+# getting polygons for each cemetery
+
+cemeteries_hash = array_of_existing_cemeteries.each_with_object({}) do |cemetery, hash|
+  puts "array entry starts processing"
+  puts cemetery
+
+  unless cemetery.downcase.include?('кладбище')
+    cemetery = cemetery.concat(' кладбище')
+  end
+
+  response = Net::HTTP.get(URI.parse(URI::Parser.new.escape("https://nominatim.openstreetmap.org/search?q=#{cemetery} Санкт-Петербург&format=json&limit=1")))
+
+  parsed_response = JSON.parse(response)
+
+  puts "cemetery response is:\n#{response}\n"
+
+  coordinates = if parsed_response.empty?
+    puts "polygon not found"
+    nil
+  else
+    puts "polygon found"
+    osm_id = parsed_response[0]['osm_id']
+    osm_id_type = parsed_response[0]['osm_type'][0].capitalize
+    bounding_box = parsed_response[0]['boundingbox']
+
+    second_response = Net::HTTP.get(URI("https://nominatim.openstreetmap.org/lookup?osm_ids=#{osm_id_type}#{osm_id}&format=json&polygon_geojson=1"))
+
+    second_response.class
+
+    unless JSON.parse(second_response).nil?
+      puts JSON.parse(second_response)[0]['geojson']
+      JSON.dump(JSON.parse(second_response)[0]['geojson'])
+    else
+      puts "nil geojson"
+      puts "the response was #{second_response}"
+    end
+  end
+
+  hash[cemetery] = {
+    coordinates_geo_json: coordinates,
+    boundingbox: bounding_box
+
+  }
+end
+
+
+
+
+
+
+
+
+
+
+
+def create_cemetery(name = Faker::Travel::TrainStation.name, coordinates_geo_json = nil)
   Cemetery.create(
-    name: Faker::Travel::TrainStation.name,
+    name: name,
     year_opened: Faker::Date.between(from: '1800-01-01', to: '1899-12-31'),
     year_closed: Faker::Date.between(from: '1900-01-01', to: '1939-09-01'),
     description: Faker::Lorem.paragraph(sentence_count: 20),
     main_pic_link: FFaker::Image.url,
-    main_thumb_pic_link: FFaker::Image.url('150x150')
+    main_thumb_pic_link: FFaker::Image.url('150x150'),
+    coordinates_geo_json: coordinates_geo_json
   )
 end
 
@@ -74,9 +158,16 @@ Cemetery.create(
   main_thumb_pic_link: FFaker::Image.url('150x150')
 )
 
-15.times do 
-  create_cemetery
+puts cemeteries_hash
+
+cemeteries_hash.each do |name, hash|
+  create_cemetery(name, hash[:coordinates_geo_json])
 end
+
+
+# 15.times do
+#   create_cemetery
+# end
 
 Cemetery.all.each_with_index do |cemetery, index|
   n = quasi_random_n_of_photos(index)

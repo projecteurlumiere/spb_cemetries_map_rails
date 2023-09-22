@@ -53,6 +53,7 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   gem "faker"
   gem "ffaker"
+  gem "nokogiri"
 end
 
 group :development do

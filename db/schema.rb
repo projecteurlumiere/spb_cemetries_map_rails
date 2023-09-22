@@ -17,6 +17,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_08_161358) do
     t.string "year_closed"
     t.string "description"
     t.string "coordinates"
+    t.string "coordinates_geo_json"
     t.string "main_pic_link"
     t.string "main_thumb_pic_link"
     t.datetime "created_at", null: false
