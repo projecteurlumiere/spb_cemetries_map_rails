@@ -12,83 +12,58 @@
 
 require 'net/http'
 
-# getting the list of cemeteries
+# getting the list of cemeteries from a parsed webpage
 
-cemetery_list = Net::HTTP.get(URI("https://spb.ritual.ru/poleznaya-informatsiya/kladbishcha/"))
+def fetch_list_of_cemeteries(url, css_filter)
+  node_list = Net::HTTP.get(URI(url))
 
-path_to_letter_boxes = "div.flat-grid > div.flat-grid__block > div.flat-grid__list"
+  Nokogiri::HTML.parse(node_list).css(css_filter).each_with_object([]) do |tag, array|
+    tag.children.each do |child_tag|
+      next if child_tag.attribute('alt').nil?
+      array << child_tag.attribute('alt').value
+    end
+  end.uniq
+end
 
-array_of_existing_cemeteries = Nokogiri::HTML.parse(cemetery_list).css(path_to_letter_boxes).each_with_object([]) do |tag, array|
-  tag.children.each do |child_tag|
-    next if child_tag.attribute('alt').nil?
-    array << child_tag.attribute('alt').value
+# getting a hash of geojson polygons for each cemetery from osm nominatim api
+# block is for name filtering
+
+def fetch_polygons_hash(cemeteries_array, &block)
+  cemeteries_array.each_with_object({}) do |cemetery_name, hash|
+    cemetery = block.call(cemetery_name)
+
+    osm_type_id = fetch_osm_type_id(cemetery)
+
+    coordinates = if osm_type_id.nil?
+      nil
+    else
+      fetch_osm_polygon(osm_type_id)
+    end
+
+    hash[cemetery] = { coordinates_geo_json: coordinates }
   end
-end.uniq
+end
 
-puts array_of_existing_cemeteries.count
+def fetch_osm_type_id(cemetery_name)
+  response = Net::HTTP.get(URI.parse(URI::Parser.new.escape("https://nominatim.openstreetmap.org/search?q=#{cemetery_name} Санкт-Петербург&format=json&limit=1")))
+  parsed_response = JSON.parse(response)
 
-
-
-
-
-
-
-
-
-# getting polygons for each cemetery
-
-cemeteries_hash = array_of_existing_cemeteries.each_with_object({}) do |cemetery, hash|
-  puts "array entry starts processing"
-  puts cemetery
-
-  unless cemetery.downcase.include?('кладбище')
-    cemetery = cemetery.concat(' кладбище')
+  if parsed_response.empty?
+    puts "id not found for #{cemetery_name}"
+    nil
+  else
+    puts "id found for #{cemetery_name}"
+    parsed_response[0]['osm_type'][0].capitalize.concat(parsed_response[0]['osm_id'].to_s)
   end
+end
 
-  response = Net::HTTP.get(URI.parse(URI::Parser.new.escape("https://nominatim.openstreetmap.org/search?q=#{cemetery} Санкт-Петербург&format=json&limit=1")))
+def fetch_osm_polygon(osm_type_id)
+  response = Net::HTTP.get(URI("https://nominatim.openstreetmap.org/lookup?osm_ids=#{osm_type_id}&format=json&polygon_geojson=1"))
 
   parsed_response = JSON.parse(response)
 
-  puts "cemetery response is:\n#{response}\n"
-
-  coordinates = if parsed_response.empty?
-    puts "polygon not found"
-    nil
-  else
-    puts "polygon found"
-    osm_id = parsed_response[0]['osm_id']
-    osm_id_type = parsed_response[0]['osm_type'][0].capitalize
-    bounding_box = parsed_response[0]['boundingbox']
-
-    second_response = Net::HTTP.get(URI("https://nominatim.openstreetmap.org/lookup?osm_ids=#{osm_id_type}#{osm_id}&format=json&polygon_geojson=1"))
-
-    second_response.class
-
-    unless JSON.parse(second_response).nil?
-      puts JSON.parse(second_response)[0]['geojson']
-      JSON.dump(JSON.parse(second_response)[0]['geojson'])
-    else
-      puts "nil geojson"
-      puts "the response was #{second_response}"
-    end
-  end
-
-  hash[cemetery] = {
-    coordinates_geo_json: coordinates,
-    boundingbox: bounding_box
-
-  }
+  JSON.dump(parsed_response[0]['geojson']) unless parsed_response.empty? # was nil? before
 end
-
-
-
-
-
-
-
-
-
-
 
 def create_cemetery(name = Faker::Travel::TrainStation.name, coordinates_geo_json = nil)
   Cemetery.create(
@@ -119,7 +94,8 @@ def quasi_random_n_of_photos(index)
   end
 end
 
-mitro_coordinates = "[
+def create_mitro_cemetery
+  mitro_coordinates = "[
   [59.896563, 30.310181],
   [59.891538, 30.310439],
   [59.890580, 30.306039],
@@ -148,26 +124,38 @@ mitro_coordinates = "[
   [59.896532, 30.303163]
 ]".gsub(/\R+/, '').squeeze.concat("]")
 
-Cemetery.create(
-  name: "Митрофаньевское кладбище",
-  year_opened: Faker::Date.between(from: '1800-01-01', to: '1899-12-31'),
-  year_closed: Faker::Date.between(from: '1900-01-01', to: '1939-09-01'),
-  description: Faker::Lorem.paragraph(sentence_count: 20),
-  coordinates: mitro_coordinates,
-  main_pic_link: FFaker::Image.url,
-  main_thumb_pic_link: FFaker::Image.url('150x150')
-)
+  Cemetery.create(
+    name: "Митрофаньевское кладбище",
+    year_opened: Faker::Date.between(from: '1800-01-01', to: '1899-12-31'),
+    year_closed: Faker::Date.between(from: '1900-01-01', to: '1939-09-01'),
+    description: Faker::Lorem.paragraph(sentence_count: 20),
+    coordinates: mitro_coordinates,
+    main_pic_link: FFaker::Image.url,
+    main_thumb_pic_link: FFaker::Image.url('150x150')
+  )
+end
 
-puts cemeteries_hash
+# beginning:
+
+url = 'https://spb.ritual.ru/poleznaya-informatsiya/kladbishcha/'
+css_filter = 'div.flat-grid > div.flat-grid__block > div.flat-grid__list'
+
+cemeteries_array = fetch_list_of_cemeteries(url, css_filter)
+
+cemeteries_hash = fetch_polygons_hash(cemeteries_array) do |cemetery_name|
+  unless cemetery_name.downcase.include?('кладбище')
+    cemetery_name = 'Кладбище '.concat(cemetery_name)
+  end
+
+  if cemetery_name.downcase.include?('девятого')
+    cemetery_name = cemetery_name.sub('Девятого', '9')
+  end
+  cemetery_name
+end
 
 cemeteries_hash.each do |name, hash|
   create_cemetery(name, hash[:coordinates_geo_json])
 end
-
-
-# 15.times do
-#   create_cemetery
-# end
 
 Cemetery.all.each_with_index do |cemetery, index|
   n = quasi_random_n_of_photos(index)
