@@ -153,6 +153,8 @@ cemeteries_hash = fetch_polygons_hash(cemeteries_array) do |cemetery_name|
   cemetery_name
 end
 
+create_mitro_cemetery
+
 cemeteries_hash.each do |name, hash|
   create_cemetery(name, hash[:coordinates_geo_json])
 end
